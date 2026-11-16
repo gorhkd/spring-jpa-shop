@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: jpashop
+  profiles:
+    active: local
