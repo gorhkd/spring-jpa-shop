@@ -30,7 +30,7 @@ public class Order {
 
     private LocalDateTime orderDate;
 
-    @Enumerated(EnumType.String)
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
     public void setMember(Member member) {
