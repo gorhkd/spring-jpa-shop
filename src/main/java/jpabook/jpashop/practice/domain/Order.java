@@ -2,7 +2,7 @@ package jpabook.jpashop.practice.domain;
 
 import jakarta.persistence.*;
 import jpabook.jpashop.domain.OrderItem;
-import jpabook.jpashop.domain.OrderStatus;
+import jpabook.jpashop.practice.domain.OrderStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,7 +30,6 @@ public class Order {
     @JoinColumn(name = "delivery_id")
     private Delibery delibery;
 
-    @Column(name = "order_date")
     private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)
