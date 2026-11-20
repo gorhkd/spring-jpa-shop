@@ -1,4 +1,4 @@
-package jpabook.jpashop.practice2;
+package jpabook.jpashop._practice2;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

@@ -28,7 +28,7 @@ public class Category {
     @JoinColumn(name = "parent_id")
     private Category parent;
 
-    @OneToOne(mappedBy = "parent")
+    @OneToMany(mappedBy = "parent")
     private List<Category> child = new ArrayList<>();
 
     public void addChildCategory(Category child) {

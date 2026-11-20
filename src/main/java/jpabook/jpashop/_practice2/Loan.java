@@ -1,4 +1,4 @@
-package jpabook.jpashop.practice2;
+package jpabook.jpashop._practice2;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -41,8 +41,8 @@ public class Loan {
     }
 
     public static Loan createLoan(LibraryMember member, Book book) {
-        book.borrowed();
         Loan loan = new Loan(member, book);
+        book.borrowed();
         member.addLoans(loan);
         return loan;
     }
