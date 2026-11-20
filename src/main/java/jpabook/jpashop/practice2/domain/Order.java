@@ -1,8 +1,8 @@
-package jpabook.jpashop.practice.domain;
+package jpabook.jpashop.practice2.domain;
 
 import jakarta.persistence.*;
+import jpabook.jpashop.domain.Delivery;
 import jpabook.jpashop.domain.OrderItem;
-import jpabook.jpashop.practice.domain.OrderStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,11 +27,26 @@ public class Order {
     private List<OrderItem> orderItems = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "delivery_id")
-    private Delibery delibery;
+    @JoinColumn(name = "delivery_Id")
+    private Delivery delivery;
 
     private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
+
+    public void setMember(Member member) {
+        this.member = member;
+        member.getOrders().add(this);
+    }
+
+    public void addOrderItem(OrderItem orderItem) {
+        this.orderItems.add(orderItem);
+        orderItem.setOrder(this);
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+        delivery.setOrder(this);
+    }
 }

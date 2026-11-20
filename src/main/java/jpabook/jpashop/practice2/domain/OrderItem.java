@@ -1,12 +1,13 @@
-package jpabook.jpashop.practice.domain;
+package jpabook.jpashop.practice2.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Entity
-@Getter
-@Setter
+@Getter @Setter
 @Table(name = "order_item")
 public class OrderItem {
 
@@ -16,15 +17,14 @@ public class OrderItem {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id")
+    @JoinColumn(name = "item_id"))
     private Item item;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
 
-    @Column(name = "order_price")
-    private int orderPrice;
+    private BigDecimal orderPrice;
 
     private int count;
 }

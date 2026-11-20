@@ -1,4 +1,4 @@
-package jpabook.jpashop.practice.domain;
+package jpabook.jpashop.practice2.domain;
 
 import jakarta.persistence.*;
 import jpabook.jpashop.domain.Address;
@@ -8,10 +8,12 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity @Getter @Setter
+@Entity
+@Getter @Setter
 public class Member {
 
-    @Id @GeneratedValue @Column(name = "member_id")
+    @Id @GeneratedValue
+    @Column(name = "member_id")
     private Long id;
 
     private String name;
@@ -20,5 +22,5 @@ public class Member {
     private Address address;
 
     @OneToMany(mappedBy = "member")
-    private List<Order> order = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
 }
