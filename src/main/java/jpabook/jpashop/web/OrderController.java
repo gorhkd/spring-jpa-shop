@@ -43,7 +43,7 @@ public class OrderController {
     public String orderList(@ModelAttribute("orderSearch") OrderSearch orderSearch, Model model) {
         List<Order> orders = orderService.findOrders(orderSearch);
         model.addAttribute("orders", orders);
-        return "order/orderList";
+        return "order/OrderList";
     }
 
     @PostMapping(value = "/orders/{orderId}/cancel")

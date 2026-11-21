@@ -4,7 +4,7 @@
 <body>
 <div class="container">
     <div th:replace="~{fragments/bodyHeader :: bodyHeader}"/>
-    <form th:object="${form}" method="post">
+    <form th:action="@{/items/{itemId}/edit(itemId=${form.id})}" th:object="${form}" method="post">
         <!-- id -->
         <input type="hidden" th:field="*{id}" />
         <div class="form-group">
@@ -27,7 +27,7 @@
             <label th:for="isbn">ISBN</label>
             <input type="text" th:field="*{isbn}" class="form-control" placeholder="ISBN을 입력하세요" />
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">저장</button>
     </form>
     <div th:replace="~{fragments/footer :: footer}" />
 </div> <!-- /container -->
