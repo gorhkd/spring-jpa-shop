@@ -27,7 +27,7 @@ public class MemberApiController {
     }
     // 문제점: 엔티티에 API 검증을 위한 로직이 들어간다, 여러 API를 위한 엔티티가 요구사항을 담기 어려움. 엔티티가 변하면 API 스펙이 변한다.
 
-    @PostMapping("/api/v1/members")
+    @PostMapping("/api/v2/members")
     public CreateMemberResponse saveMemberV2(@RequestBody @Valid CreateMemberRequest request) {
 
         Member member = new Member();
