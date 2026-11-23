@@ -1,11 +1,11 @@
 package jpabook.jpashop.repository;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
-import jpabook.jpashop.domain.Member;
+import jpabook.jpashop.domain.*;
 import jpabook.jpashop.domain.Order;
-import jpabook.jpashop.domain.OrderSearch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -19,6 +19,8 @@ public class OrderRepository {
 
     private final EntityManager em;
 
+    private final JPAQueryFactory query;
+
     public void save(Order order) {
         em.persist(order);
     }
@@ -27,6 +29,7 @@ public class OrderRepository {
         return em.find(Order.class, id);
     }
 
+/*
     public List<Order> findAll(OrderSearch orderSearch) {
         //language = JPQL
         String jpql = "select o From Order o join o.member m";
@@ -67,6 +70,22 @@ public class OrderRepository {
         return query.getResultList();
     }
 
+ */
+
+
+    public List<Order> findAll(OrderSearch orderSearch) {
+        QOrder order = QOrder.order;
+        QMember member = QMember.member;
+
+        return query
+            .select(order)
+            .from(order)
+            .join(order.member, member)
+            .where(orderSearch == null ? null : order.status.eq(orderSearch.getOrderStatus()), orderSearch.getMemberName() == null ? null : member.name.like(orderSearch.getMemberName()))
+            .limit(1000)
+            .fetch();
+    }
+
     public List<Order> findAllByCriteria(OrderSearch orderSearch) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Order> cq = cb.createQuery(Order.class);
@@ -91,5 +110,28 @@ public class OrderRepository {
         cq.where(cb.and(criteria.toArray(new Predicate[criteria.size()])));
         TypedQuery<Order> query = em.createQuery(cq).setMaxResults(1000);
         return query.getResultList();
+    }
+
+    public List<Order> findAllWithMemberDelivery() {
+        return em.createQuery("select o from Order o"
+                + " join fetch o.member m"
+                + " join fetch o.delivery d", Order.class)
+            .getResultList();
+    }
+
+    public List<Order> findAllWithItem() {
+        return em.createQuery("select distinct o from Order o"
+                + " join fetch o.member m"
+                + " join fetch o.delivery d"
+                + " join fetch o.orderItems oi"
+                + " join fetch oi.item i", Order.class)
+            .getResultList();
+    }
+
+    public List<Order> findAllWithMemberDelivery(int offset, int limit) {
+        return em.createQuery("select o from Order o" + " join fetch o.member m" + " join fetch o.delivery d", Order.class)
+            .setFirstResult(offset)
+            .setMaxResults(limit)
+            .getResultList();
     }
 }
